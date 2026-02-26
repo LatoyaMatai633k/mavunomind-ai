@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MavunoMind AI — Prototype</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">🌱</div>
+        <div>
+          <div class="brand-name">MavunoMind AI</div>
+          <div class="brand-tag">Smart farming dashboard</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a class="nav-link" href="#/dashboard" data-route="dashboard">🏠 Dashboard</a>
+        <a class="nav-link" href="#/ask" data-route="ask">🤖 Ask AI</a>
+        <a class="nav-link" href="#/alerts" data-route="alerts">🚨 Disease Alerts</a>
+        <a class="nav-link" href="#/knowledge" data-route="knowledge">📚 Knowledge Base</a>
+        <a class="nav-link" href="#/language" data-route="language">🌍 Language</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="pill">Stage 2 Prototype</div>
+        <div class="muted small">Built for hackathon demo</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="title" id="pageTitle">Dashboard</div>
+          <div class="subtitle" id="pageSubtitle">Hello Farmer 👋 How can Mavuno help today?</div>
+        </div>
+        <div class="topbar-actions">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span class="muted small">Online</span>
+        </div>
+      </header>
+
+      <section class="content" id="content"></section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
