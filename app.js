@@ -4,7 +4,7 @@ const pageSubtitle = document.getElementById("pageSubtitle");
 
 const state = {
   language: "English",
-  lastQuestion: "My chickens are not eating.",
+  lastQuestion: "My chickens are not eating."
 };
 
 function setActiveNav(route) {
@@ -21,60 +21,66 @@ function routeFromHash() {
 
 function renderDashboard() {
   pageTitle.textContent = "Dashboard";
-  pageSubtitle.textContent = "Hello Farmer 👋 How can Mavuno help today?";
+  pageSubtitle.textContent = "Hello. What do you want to do today?";
+
   content.innerHTML = `
     <div class="row">
       <span class="badge">Language: ${state.language}</span>
       <span class="badge">Prototype Mode</span>
-      <a class="btn secondary" href="#/language">Change Language</a>
+      <a class="btn secondary" href="#/language">Language Settings</a>
     </div>
 
     <div class="grid-3">
       <div class="card">
-        <h3>🤖 Ask Mavuno AI</h3>
-        <p>Describe a crop or livestock issue in simple words and get guidance + prevention tips.</p>
-        <div class="row" style="margin-top:12px">
+        <h3>Ask AI Assistant</h3>
+        <p>Describe a crop or livestock issue in simple words and get guidance and prevention tips.</p>
+        <div class="row">
           <a class="btn" href="#/ask">Open Ask AI</a>
         </div>
       </div>
 
       <div class="card">
-        <h3>📚 Farming Tips</h3>
-        <p>Beginner-friendly guides for poultry, soil, planting, and farm hygiene best practices.</p>
-        <div class="row" style="margin-top:12px">
+        <h3>Knowledge Base</h3>
+        <p>Beginner-friendly guides for poultry, soil preparation, planting, and farm hygiene.</p>
+        <div class="row">
           <a class="btn" href="#/knowledge">Open Knowledge</a>
         </div>
       </div>
 
       <div class="card">
-        <h3>🚨 Disease Alerts</h3>
-        <p>Simple alerts to help farmers act early and reduce losses in the community.</p>
-        <div class="row" style="margin-top:12px">
+        <h3>Disease Alerts</h3>
+        <p>Simple alerts that help farmers act early and reduce losses in the community.</p>
+        <div class="row">
           <a class="btn" href="#/alerts">View Alerts</a>
         </div>
       </div>
     </div>
 
     <div class="card">
-      <h3>What MavunoMind AI is solving</h3>
-      <p>Many small-scale farmers lack timely, clear farming support — leading to preventable losses. This dashboard shows how farmers can get guidance quickly, in a simple and scalable way.</p>
+      <h3>What this prototype shows</h3>
+      <p>
+        MavunoMind AI is designed to help small-scale African farmers access clear, timely farming support.
+        This prototype demonstrates the user experience and the core flow of the product.
+      </p>
     </div>
   `;
 }
 
 function renderAsk() {
   pageTitle.textContent = "Ask AI";
-  pageSubtitle.textContent = "Ask a question about crops or livestock — get practical guidance.";
+  pageSubtitle.textContent = "Type your issue and see the guidance (demo response).";
+
   content.innerHTML = `
     <div class="card">
       <h3>Ask MavunoMind AI</h3>
-      <p>Type your issue below. (Prototype uses a mock AI response.)</p>
-      <hr class="hr"/>
+      <p>Write what is happening with your crop or livestock. This is a prototype, so responses are simulated.</p>
+
       <div class="form">
         <textarea id="q" placeholder="Example: My chickens are not eating.">${state.lastQuestion}</textarea>
+
         <div class="row">
           <button class="btn" id="askBtn">Get Guidance</button>
-          <a class="btn secondary" href="#/dashboard">Back to Dashboard</a>
+          <a class="btn secondary" href="#/dashboard">Back</a>
         </div>
       </div>
     </div>
@@ -85,37 +91,49 @@ function renderAsk() {
   document.getElementById("askBtn").addEventListener("click", () => {
     const q = document.getElementById("q").value.trim() || "My chickens are not eating.";
     state.lastQuestion = q;
-    const response = mockAIResponse(q);
+
     const panel = document.getElementById("answerPanel");
     panel.style.display = "block";
-    panel.innerHTML = response;
+    panel.innerHTML = buildResponse(q);
   });
 }
 
-function mockAIResponse(question) {
-  // Simple keyword-based demo. Looks believable for Stage 2 prototype.
+function buildResponse(question) {
   const q = question.toLowerCase();
+
   let causes = ["Stress", "Dirty water", "Poor nutrition"];
-  let tips = ["Replace water and clean feeders", "Separate weak chickens", "Monitor temperature and ventilation"];
-  let note = "If symptoms get worse or many birds are affected, consult a local vet/extension officer.";
+  let tips = [
+    "Replace water and clean feeders",
+    "Separate weak animals early",
+    "Monitor temperature and ventilation"
+  ];
+  let note = "If symptoms spread quickly or many animals are affected, consult a local vet or extension officer.";
 
   if (q.includes("chicken") || q.includes("hen") || q.includes("poultry")) {
     causes = ["Heat stress", "Respiratory infection", "Parasites or worms", "Feed quality issues"];
-    tips = ["Check water supply and shade", "Isolate sick birds", "Clean coop and bedding", "Consider deworming schedule"];
-    note = "If multiple birds show breathing issues, act early and follow local guidance to prevent spread.";
+    tips = [
+      "Check clean water and shade",
+      "Isolate sick birds and clean the coop",
+      "Improve ventilation and reduce overcrowding",
+      "Consider a deworming plan if needed"
+    ];
+    note = "If multiple birds show breathing issues, act early to reduce spread.";
   } else if (q.includes("maize") || q.includes("corn") || q.includes("yellow leaves")) {
-    causes = ["Nitrogen deficiency", "Overwatering", "Soil pH imbalance"];
-    tips = ["Test soil if possible", "Use compost or balanced fertilizer", "Improve drainage and spacing"];
-    note = "Track changes over 3–5 days and adjust one thing at a time.";
+    causes = ["Nutrient deficiency", "Overwatering", "Soil pH imbalance"];
+    tips = [
+      "Check drainage and spacing",
+      "Add compost or balanced fertilizer",
+      "Adjust watering schedule and observe changes"
+    ];
+    note = "Make one change at a time and monitor the crop for a few days.";
   }
 
   return `
     <div class="card" style="margin:0;">
-      <h3>🤖 MavunoMind AI Guidance</h3>
-      <p class="muted">Question: <strong>${escapeHtml(question)}</strong></p>
-      <hr class="hr"/>
+      <h3>Guidance</h3>
+      <p><strong>Question:</strong> ${escapeHtml(question)}</p>
 
-      <div class="kv">
+      <div class="kv" style="margin-top:12px;">
         <div>
           <strong>Possible causes</strong>
           <ul class="list">
@@ -124,20 +142,20 @@ function mockAIResponse(question) {
         </div>
 
         <div>
-          <strong>Prevention & next steps</strong>
+          <strong>Prevention and next steps</strong>
           <ul class="list">
             ${tips.map(t => `<li>${t}</li>`).join("")}
           </ul>
         </div>
 
-        <div class="alert panel">
+        <div class="panel alert">
           <strong>Important</strong>
-          <div class="muted" style="margin-top:6px">${note}</div>
+          <div style="margin-top:8px; color:#7C2D12;">${escapeHtml(note)}</div>
         </div>
 
         <div class="row">
           <a class="btn" href="#/alerts">Check Alerts</a>
-          <a class="btn secondary" href="#/knowledge">Learn More</a>
+          <a class="btn secondary" href="#/knowledge">Open Knowledge Base</a>
         </div>
       </div>
     </div>
@@ -146,71 +164,85 @@ function mockAIResponse(question) {
 
 function renderAlerts() {
   pageTitle.textContent = "Disease Alerts";
-  pageSubtitle.textContent = "Early awareness helps reduce losses across the community.";
+  pageSubtitle.textContent = "Early awareness helps reduce losses.";
+
   content.innerHTML = `
     <div class="card alert">
-      <h3>🚨 Poultry flu risk detected in your region</h3>
-      <p>Action: strengthen coop hygiene, limit movement between farms, isolate sick birds early.</p>
-      <div class="row" style="margin-top:12px">
-        <a class="btn" href="#/ask">Ask AI about symptoms</a>
+      <h3>Poultry flu risk detected in your region</h3>
+      <p>
+        Recommended action: strengthen hygiene, limit movement between farms, and isolate sick birds early.
+      </p>
+      <div class="row">
+        <a class="btn" href="#/ask">Ask about symptoms</a>
         <a class="btn secondary" href="#/dashboard">Back</a>
       </div>
     </div>
 
     <div class="card">
-      <h3>How alerts work (prototype)</h3>
-      <p>In future versions, alerts can be powered by community reports + verified sources, then displayed by location.</p>
+      <h3>How alerts can scale</h3>
+      <p>
+        In future versions, alerts can combine community reports and verified sources, then show them by location.
+      </p>
     </div>
   `;
 }
 
 function renderKnowledge() {
   pageTitle.textContent = "Knowledge Base";
-  pageSubtitle.textContent = "Beginner-friendly guides for small African farms.";
+  pageSubtitle.textContent = "Quick guides for small farms.";
+
   content.innerHTML = `
     <div class="grid-3">
       <div class="card">
-        <h3>🐔 Poultry Health Basics</h3>
-        <p>Clean water, good ventilation, dry bedding, and early isolation reduce disease spread.</p>
-        <div class="row" style="margin-top:12px">
-          <a class="btn" href="#/ask">Ask AI</a>
+        <h3>Poultry health basics</h3>
+        <p>Clean water, ventilation, dry bedding, and early isolation reduce disease spread.</p>
+        <div class="row">
+          <a class="btn secondary" href="#/ask">Ask AI</a>
         </div>
       </div>
+
       <div class="card">
-        <h3>🌱 Soil Preparation</h3>
-        <p>Start with compost, improve drainage, and plant with spacing to reduce pests and rot.</p>
+        <h3>Soil preparation</h3>
+        <p>Use compost, improve drainage, and plant with spacing to reduce pests and rot.</p>
       </div>
+
       <div class="card">
-        <h3>🌦️ Weather & Planning</h3>
-        <p>Plan planting times and protect livestock during extreme heat or cold snaps.</p>
+        <h3>Weather planning</h3>
+        <p>Protect livestock during extreme heat and plan planting times to reduce loss risk.</p>
       </div>
     </div>
 
     <div class="card">
-      <h3>Future improvement</h3>
-      <p>Add local language content + short videos + community Q&A for farmer-to-farmer learning.</p>
+      <h3>Future improvements</h3>
+      <p>More local language content, short video guides, and community question sharing.</p>
     </div>
   `;
 }
 
 function renderLanguage() {
-  pageTitle.textContent = "Language Settings";
-  pageSubtitle.textContent = "Start small, then expand for accessibility across Africa.";
+  pageTitle.textContent = "Language";
+  pageSubtitle.textContent = "Start with English, then expand.";
+
   content.innerHTML = `
     <div class="card">
-      <h3>🌍 Choose Language</h3>
-      <p>Prototype starts with English, with planned expansion.</p>
-      <hr class="hr"/>
+      <h3>Language settings</h3>
+      <p>English is active in this prototype. Other languages are planned for expansion.</p>
+
       <div class="row">
         <button class="btn" data-lang="English">English (active)</button>
-        <button class="btn secondary" data-lang="isiZulu">isiZulu (coming soon)</button>
-        <button class="btn secondary" data-lang="Swahili">Swahili (future)</button>
+        <button class="btn secondary" data-lang="isiZulu">isiZulu (planned)</button>
+        <button class="btn secondary" data-lang="Swahili">Swahili (planned)</button>
       </div>
-      <div class="panel" style="margin-top:12px">
-        <strong>Current:</strong> <span class="muted">${state.language}</span>
-        <div class="muted small" style="margin-top:6px">
-          In later versions, MavunoMind AI can add translation and local phrasing support without rebuilding the platform.
+
+      <div class="panel" style="margin-top:14px;">
+        <strong>Current:</strong> <span style="color: var(--muted); font-weight:700;">${state.language}</span>
+        <div style="margin-top:8px; color: var(--muted);">
+          The platform is structured so language support can grow without rebuilding the whole system.
         </div>
+      </div>
+
+      <div class="row">
+        <a class="btn secondary" href="#/dashboard">Back</a>
       </div>
     </div>
   `;
@@ -218,8 +250,7 @@ function renderLanguage() {
   content.querySelectorAll("button[data-lang]").forEach(btn => {
     btn.addEventListener("click", () => {
       const lang = btn.getAttribute("data-lang");
-      // Only switch to English in prototype; others stay "planned"
-      state.language = lang === "English" ? "English" : `${lang} (planned)`;
+      state.language = lang;
       renderLanguage();
     });
   });
@@ -227,12 +258,13 @@ function renderLanguage() {
 
 function renderNotFound() {
   pageTitle.textContent = "Not Found";
-  pageSubtitle.textContent = "That page does not exist.";
+  pageSubtitle.textContent = "Use the menu to navigate.";
+
   content.innerHTML = `
     <div class="card">
       <h3>Page not found</h3>
-      <p class="muted">Use the sidebar to navigate.</p>
-      <div class="row" style="margin-top:12px">
+      <p>This route does not exist. Use the menu on the left.</p>
+      <div class="row">
         <a class="btn" href="#/dashboard">Go to Dashboard</a>
       </div>
     </div>
