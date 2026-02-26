@@ -1,15 +1,15 @@
-:root{
-  --bg:#0b1411;
-  --panel:#0f1f18;
-  --panel2:#0f241a;
-  --card:#12281e;
-  --card2:#143023;
-  --text:#e9f5ee;
-  --muted:#a8c4b3;
-  --line:#1f3c2e;
-  --accent:#47c27c;
-  --accent2:#2ea86a;
-  --warn:#ffcf66;
+::root{
+  --bg:#F8FAFC;
+  --panel:#FFFFFF;
+  --panel2:#F1F5F9;
+  --card:#FFFFFF;
+  --card2:#F9FAFB;
+  --text:#0F172A;
+  --muted:#64748B;
+  --line:#E2E8F0;
+  --accent:#22C55E;
+  --accent2:#16A34A;
+  --warn:#F59E0B;
 }
 
 *{box-sizing:border-box}
@@ -17,7 +17,7 @@ html,body{height:100%}
 body{
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  background: radial-gradient(1200px 800px at 20% 0%, #123422 0%, var(--bg) 55%);
+  background: var(--bg);
   color:var(--text);
 }
 
@@ -28,7 +28,7 @@ body{
 
 .sidebar{
   width:270px;
-  background: linear-gradient(180deg, var(--panel) 0%, #0b1611 100%);
+  background: var(--panel);
   border-right:1px solid var(--line);
   padding:18px 14px;
   display:flex;
@@ -135,10 +135,11 @@ body{
 }
 
 .card{
-  background: linear-gradient(180deg, rgba(18,40,30,0.85) 0%, rgba(18,40,30,0.60) 100%);
+  background: var(--card);
   border:1px solid var(--line);
-  border-radius:18px;
+  border-radius:16px;
   padding:16px;
+  box-shadow: 0 4px 12px rgba(15,23,42,0.05);
 }
 .card h3{
   margin:0 0 8px 0;
@@ -147,21 +148,18 @@ body{
 .card p{margin:0; color:var(--muted); font-size:13px; line-height:1.45}
 
 .btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  padding:10px 12px;
-  border-radius:12px;
-  border:1px solid rgba(71,194,124,0.25);
-  background: rgba(71,194,124,0.14);
-  color:var(--text);
-  font-weight:700;
+  background: var(--accent);
+  border:none;
+  color:white;
+  font-weight:600;
+  padding:10px 14px;
+  border-radius:10px;
   cursor:pointer;
-  text-decoration:none;
-  transition:.15s ease;
+  transition:0.2s ease;
 }
-.btn:hover{background: rgba(71,194,124,0.20)}
+.btn:hover{
+  background: var(--accent2);
+}
 .btn.secondary{
   background: rgba(168,196,179,0.08);
   border-color: rgba(168,196,179,0.18);
